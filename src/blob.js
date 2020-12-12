@@ -875,24 +875,24 @@ Identity.prototype.unset = function (pointer, key, fn) {
 exports.Blob = BlobObj;
 
 /**
- * Get ripple name for a given address
+ * Get divvy name for a given address
  */
 
-BlobClient.getRippleName = function(url, address, fn) {
+BlobClient.getDivvyName = function(url, address, fn) {
   if (!crypt.isValidAddress(address)) {
-    return fn (new Error('Invalid ripple address'));
+    return fn (new Error('Invalid divvy address'));
   }
 
-  if (!crypt.isValidAddress(address)) return fn (new Error("Invalid ripple address"));
+  if (!crypt.isValidAddress(address)) return fn (new Error("Invalid divvy address"));
   request.get(url + '/v1/user/' + address, function(err, resp){
     if (err) {
       fn(new Error('Unable to access vault sever'));
     } else if (resp.body && resp.body.username) {
       fn(null, resp.body.username);
     } else if (resp.body && resp.body.exists === false) {
-      fn (new Error('No ripple name for this address'));
+      fn (new Error('No divvy name for this address'));
     } else {
-      fn(new Error('Unable to determine if ripple name exists'));
+      fn(new Error('Unable to determine if divvy name exists'));
     }
   });
 };
@@ -1341,7 +1341,7 @@ BlobClient.deleteBlob = function(options, fn) {
  * @param {array}  opts.profile.addresses (optional, array of address objects)
  * 
  * @param {string} attribute.id ... id of existing attribute
- * @param {string} attribute.name ... attribute name i.e. ripple_address
+ * @param {string} attribute.name ... attribute name i.e. divvy_address
  * @param {string} attribute.type ... optional, sub-type of attribute
  * @param {string} attribute.value ... value of attribute
  * @param {string} attribute.domain ... corresponding domain

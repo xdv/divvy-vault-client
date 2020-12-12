@@ -1,2 +1,2 @@
-ripple = require('ripple-lib');
+divvy = require('divvy-lib');
 module.exports = require('./vaultclient');

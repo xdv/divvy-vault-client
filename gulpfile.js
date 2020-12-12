@@ -19,11 +19,11 @@ gulp.task('build', function(callback) {
     cache: true,
     entry: './src/index.js',
     output: {
-      library: 'rippleVaultClient',
+      library: 'divvyVaultClient',
       path: './build/',
-      filename: [ 'ripple-vault-client-', '.js' ].join(pkg.version)
+      filename: [ 'divvy-vault-client-', '.js' ].join(pkg.version)
     },
-    externals: {'ripple-lib': 'ripple'}
+    externals: {'divvy-lib': 'divvy'}
   }, callback);
 });
 
@@ -33,14 +33,14 @@ gulp.task('bower-build', function(callback) {
     .pipe(gulpwebpack({
       cache: true,
       output: {
-        library: 'rippleVaultClient'
+        library: 'divvyVaultClient'
       },
-      externals: {'ripple-lib': 'ripple'}
+      externals: {'divvy-lib': 'divvy'}
     }))
-    .pipe(rename('ripple-vault-client.js'))
+    .pipe(rename('divvy-vault-client.js'))
     .pipe(gulp.dest('./dist'))
     .pipe(uglify())
-    .pipe(rename('ripple-vault-client-min.js'))
+    .pipe(rename('divvy-vault-client-min.js'))
     .pipe(gulp.dest('./dist'));
 });
 
@@ -50,11 +50,11 @@ gulp.task('bower-build-debug', function(callback) {
       cache: true,
       debug: true,
       output: {
-        library: 'rippleVaultClient'
+        library: 'divvyVaultClient'
       },
-      externals: {'ripple-lib': 'ripple'}
+      externals: {'divvy-lib': 'divvy'}
     }))
-    .pipe(rename('ripple-vault-client-debug.js'))
+    .pipe(rename('divvy-vault-client-debug.js'))
     .pipe(gulp.dest('./dist'));
 });
 

@@ -1,10 +1,10 @@
 var assert      = require('assert');
 var VaultClient = require('../src').VaultClient;
-var RippleTxt   = require('../src').RippleTxt;
+var DivvyTxt   = require('../src').DivvyTxt;
 var AuthInfo    = require('../src').AuthInfo;
 var Blob        = require('../src').Blob;
-var sjcl        = ripple.sjcl;
-var UInt256     = ripple.UInt256;
+var sjcl        = divvy.sjcl;
+var UInt256     = divvy.UInt256;
 var nock        = require('nock');
 var online      = process.argv.indexOf('--online') !== -1 ? true : false; 
 
@@ -15,10 +15,10 @@ var exampleData = {
   username: 'exampleUser',
   new_username : 'exampleUser-rename',
   password: 'pass word',
-  domain: 'integration.rippletrade.com',
+  domain: 'integration.divvytrade.com',
   masterkey : 'ssize4HrSYZShMWBtK6BhALGEk8VH',
   email_token : '77825040-9096-4695-9cbc-76720f6a8649',
-  activateLink : 'https://staging.ripple.com/client/#/register/activate/',
+  activateLink : 'https://staging.xdv.io/client/#/register/activate/',
   device_id : "ac1b6f6dbca98190eb9687ba06f0e066",
   identity_id : "17fddb71-a5c2-44ce-8b50-4b381339d4f2",
   blob: { 
@@ -40,7 +40,7 @@ var exampleData = {
   }
 };
 
-var rippleTxtRes = '[authinfo_url]\r\nhttp://54.191.36.127:5993/v1/authinfo\r\n' +
+var divvyTxtRes = '[authinfo_url]\r\nhttp://54.191.36.127:5993/v1/authinfo\r\n' +
     '[accounts]\r\nraVUps4RghLYkVBcpMaRbVKRTTzhesPXd\r\n' +
     '[currencies]\r\nUSD\r\n';
 
@@ -51,9 +51,9 @@ var authInfoRes = {
     "pakdf" : { 
       "modulus" : "ee419352d1693a785244282c22c5c74cdf2f5d40cb4bf5eee7cd3d37365082300c26bb68b58cfa04983eb95c2a8082a4e3e4eba333c546333e9cea3acd1fd50b24f8ce05d5cc6c896600570b315da4b70353748ed1ec5158ea3806fe208c2bb45f2b8731f89c13f009efd9dd23c9abb589df9ad270c3e7f2a111577b1679372054a3bf6ba9c43dcf49c37af0dc01f4b4f5de33986b7733564e26086d4e11a83ebd7a2a38a5fdca1cf1d39b1da8021c79be713428acdd796963501db8dae43af4159fd8e24575c87cc5a954c77a7fcbea7d8f99907a1d134d2c9577d216d4625363cb0b3a262c8cb9017e93c2b72025402f84499c343d5265ec2fc1a4d1c5cd59",
       "alpha" : "a4600a7e949f4a79cbf43996ea8d6e2523473bd54ad5841493cfdaddf1066e488d613bea61ee7220457b1bac25f659b63fedcd1c6df5e02841e2a1f067f4e4840b9436552d8f1875ec5b345c8cdd2e22a0f79f67ab94ba6a4432e6f0774ef34f2fd49d761695ac1a1fb4627c0f5933ea200d7f66e141ae7e79918f899b993f78e9ac49919a9f8f03dfeea6648b398e55364df1af13d8101650cedecb8473e46c4ad375b41b7142bed022fa85b30253e1221a9bd39a1eedfd06856aa47b6be18fcda735315ad7c06582c862d79c60e0dc4cc33e787d365f2788974c670340ae1941daa9110b327d68949e301fc08aa7639faf4dd558620f5d62bb9cea9ef3f1aa",
-      "url" : "https://integration.auth.ripple.com/api/sign",
+      "url" : "https://integration.auth.xdv.io/api/sign",
       "exponent" : "010001",
-      "host" : "integration.auth.ripple.com"
+      "host" : "integration.auth.xdv.io"
     },
     "exists" : true,
     "username" : "exampleUser",
@@ -72,9 +72,9 @@ var authInfoNewUsernameRes = {
     pakdf: {
       modulus: 'c7f1bc1dfb1be82d244aef01228c1409c1988943ca9e21431f1669b4aa3864c9f37f3d51b2b4ba1ab9e80f59d267fda1521e88b05117993175e004543c6e3611242f24432ce8efa3b81f0ff660b4f91c5d52f2511a6f38181a7bf9abeef72db056508bbb4eeb5f65f161dd2d5b439655d2ae7081fcc62fdcb281520911d96700c85cdaf12e7d1f15b55ade867240722425198d4ce39019550c4c8a921fc231d3e94297688c2d77cd68ee8fdeda38b7f9a274701fef23b4eaa6c1a9c15b2d77f37634930386fc20ec291be95aed9956801e1c76601b09c413ad915ff03bfdc0b6b233686ae59e8caf11750b509ab4e57ee09202239baee3d6e392d1640185e1cd',
       alpha: '7283d19e784f48a96062271a5fa6e2c3addf14e6ezf78a4bb61364856d580f13552008d7b9e3b60ebd9555e9f6c7778ec69f976757d206134e54d61ba9d588a7e37a77cf48060522478352d76db000366ef669a1b1ca93c5e3e05bc344afa1e8ccb15d3343da94180dccf590c2c32408c3f3f176c8885e95d988f1565ee9b80c12f72503ab49917792f907bbb9037487b0afed967fefc9ab090164597fcd391c43fab33029b38e66ff4af96cbf6d90a01b891f856ddd3d94e9c9b307fe01e1353a8c30edd5a94a0ebba5fe7161569000ad3b0d3568872d52b6fbdfce987a687e4b346ea702e8986b03b6b1b85536c813e46052a31ed64ec490d3ba38029544aa',
-      url: 'https://integration.auth.ripple.com/api/sign',
+      url: 'https://integration.auth.xdv.io/api/sign',
       exponent: '010001',
-      host: 'integration.auth.ripple.com'
+      host: 'integration.auth.xdv.io'
     },
     exists: false,
     username: exampleData.new_username,
@@ -147,8 +147,8 @@ while(!sjcl.random.isReady()) {
   sjcl.random.addEntropy(require('crypto').randomBytes(128).toString('base64')); //add entropy to seed the generator
 }
 
-var mockRippleTxt;
-var mockRippleTxt2;
+var mockDivvyTxt;
+var mockDivvyTxt2;
 var mockAuthSign;
 var mockRegister;
 var mockBlob;
@@ -161,19 +161,19 @@ var mockProfile;
 var mockDelete;
 
 if (!online) {
-  mockRippleTxt = nock('https://integration.rippletrade.com')
-    .get('/ripple.txt')
-    .reply(200, rippleTxtRes, {
+  mockDivvyTxt = nock('https://integration.divvytrade.com')
+    .get('/divvy.txt')
+    .reply(200, divvyTxtRes, {
       'Content-Type': 'text/plain'
     }); 
 
-  mockRippleTxt2 = nock('http://54.191.36.127:5993' + exampleData.domain)
-    .get('/ripple.txt')
-    .reply(200, rippleTxtRes, {
+  mockDivvyTxt2 = nock('http://54.191.36.127:5993' + exampleData.domain)
+    .get('/divvy.txt')
+    .reply(200, divvyTxtRes, {
       'Content-Type': 'text/plain'
     }); 
 
-  mockAuthSign = nock('https://integration.auth.ripple.com')
+  mockAuthSign = nock('https://integration.auth.xdv.io')
     .persist()
     .post('/api/sign')
     .reply(200, signRes, {
@@ -253,17 +253,17 @@ if (!online) {
     });  
 }
 
-describe('Ripple Txt', function () {
-  it('should get the content of a ripple.txt file from a given domain', function(done) {
-    RippleTxt.get(exampleData.domain, function(err, resp) {
+describe('Divvy Txt', function () {
+  it('should get the content of a divvy.txt file from a given domain', function(done) {
+    DivvyTxt.get(exampleData.domain, function(err, resp) {
       assert.ifError(err);
       assert.strictEqual(typeof resp, 'object');
       done();
     });
   });
   
-  it('should get currencies from a ripple.txt file for a given domain', function(done) {
-    RippleTxt.getCurrencies(exampleData.domain, function(err, currencies) {
+  it('should get currencies from a divvy.txt file for a given domain', function(done) {
+    DivvyTxt.getCurrencies(exampleData.domain, function(err, currencies) {
       assert.ifError(err);
       assert(Array.isArray(currencies));
       done();
@@ -271,7 +271,7 @@ describe('Ripple Txt', function () {
   });
   
   it('should get the domain from a given url', function() {
-    var domain = RippleTxt.extractDomain("http://www.example.com");
+    var domain = DivvyTxt.extractDomain("http://www.example.com");
     assert.strictEqual(typeof domain, 'string');
   });  
 });
@@ -298,9 +298,9 @@ describe('VaultClient', function () {
       assert.strictEqual(client.domain, exampleData.domain);
     });
 
-    it('should default to ripple.com without a domain', function () {
+    it('should default to xdv.io without a domain', function () {
       var client = new VaultClient();
-      assert.strictEqual(client.domain, 'ripple.com');
+      assert.strictEqual(client.domain, 'xdv.io');
     });
   });
 

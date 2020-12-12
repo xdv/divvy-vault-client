@@ -1,20 +1,20 @@
-ripple-vault-client
+divvy-vault-client
 ===================
 
-A javascript / http client to interact with Ripple Vault servers.
+A javascript / http client to interact with Divvy Vault servers.
 
 The purpose of this tool is to enable applications in any javascript
-environment to login with the ripple vault and access the decrypted
-data stored using credentials originally obtained at ripple.com
+environment to login with the divvy vault and access the decrypted
+data stored using credentials originally obtained at xdv.io
 
 ## Spec Tests
 
 Run `npm test` to test the high-level behavior specs 
 
-    Ripple Vault Client
+    Divvy Vault Client
       initialization
         ✓ should be initialized with a domain 
-        ✓ should default to ripple.com without a domain 
+        ✓ should default to xdv.io without a domain 
       #login
         ✓ with username and password should retrive the blob, crypt key, and id 
       #relogin
@@ -88,4 +88,4 @@ Run `npm test` to test the high-level behavior specs
     
 ## Installation
 
-    npm install ripple-vault-client
+    npm install divvy-vault-client

@@ -2,7 +2,7 @@ var async      = require('async');
 var blobClient = require('./blob').BlobClient;
 var Blob       = require('./blob').Blob;
 var AuthInfo   = require('./authinfo').AuthInfo;
-var RippleTxt  = require('./rippletxt').RippleTxt;
+var DivvyTxt  = require('./divvytxt').DivvyTxt;
 var crypt      = require('./crypt').Crypt;
 
 
@@ -18,7 +18,7 @@ function VaultClient(opts) {
     opts = { domain: opts };
   }
 
-  this.domain   = opts.domain || 'ripple.com';
+  this.domain   = opts.domain || 'xdv.io';
   this.infos    = { };
 };
 
@@ -97,17 +97,17 @@ VaultClient.prototype._deriveUnlockKey = function (authInfo, password, keys, cal
 };
   
 /**
- * Get a ripple name from a given account address, if it has one
+ * Get a divvy name from a given account address, if it has one
  * @param {string} address - Account address to query
  * @param {string} url     - Url of blob vault
  */
 
-VaultClient.prototype.getRippleName = function(address, url, callback) {
+VaultClient.prototype.getDivvyName = function(address, url, callback) {
   //use the url from previously retrieved authInfo, if necessary
   if (!url) {
     callback(new Error('Blob vault URL is required'));
   } else {
-    blobClient.getRippleName(url, address, callback);
+    blobClient.getDivvyName(url, address, callback);
   }
 };
 
@@ -146,7 +146,7 @@ VaultClient.prototype.addressExists = function(address, callback) {
 };
 
 /**
- * Authenticate and retrieve a decrypted blob using a ripple name and password
+ * Authenticate and retrieve a decrypted blob using a divvy name and password
  *
  * @param {string}    username
  * @param {string}    password
@@ -449,7 +449,7 @@ VaultClient.prototype.changePassword = function (options, fn) {
 
 /**
  * rename
- * rename a ripple account
+ * rename a divvy account
  * @param {object} options
  * @param {string} options.username
  * @param {string} options.new_username
@@ -617,5 +617,5 @@ VaultClient.prototype.getAttestationSummary = blobClient.getAttestationSummary;
 //export by name
 exports.VaultClient = VaultClient;
 exports.AuthInfo    = AuthInfo;
-exports.RippleTxt   = RippleTxt;
+exports.DivvyTxt   = DivvyTxt;
 exports.Blob        = Blob;

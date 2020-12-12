@@ -1,11 +1,11 @@
 var async      = require('async');
 var superagent = require('superagent');
-var RippleTxt  = require('./rippletxt').RippleTxt;
+var DivvyTxt  = require('./divvytxt').DivvyTxt;
 
 var AuthInfo = { };
 
-AuthInfo._getRippleTxt = function(domain, callback) {
-  RippleTxt.get(domain, callback);
+AuthInfo._getDivvyTxt = function(domain, callback) {
+  DivvyTxt.get(domain, callback);
 };
 
 AuthInfo._getUser = function(url, callback) {
@@ -24,8 +24,8 @@ AuthInfo._getUser = function(url, callback) {
 AuthInfo.getAddress = function(domain, address, callback) {
   var self = this;
   
-  function getRippleTxt(callback) {
-    self._getRippleTxt(domain, function(err, txt) {
+  function getDivvyTxt(callback) {
+    self._getDivvyTxt(domain, function(err, txt) {
       if (err) {
         return callback(err);
       }
@@ -52,23 +52,23 @@ AuthInfo.getAddress = function(domain, address, callback) {
     });
   };
 
-  async.waterfall([ getRippleTxt, getUserAddress ], callback);
+  async.waterfall([ getDivvyTxt, getUserAddress ], callback);
 };
 
 /*
   **
- * Get auth info for a given username or ripple address
+ * Get auth info for a given username or divvy address
  *
  * @param {string}    domain - Domain which hosts the user's info
- * @param {string}    address - Username or ripple address who's info we are retreiving
+ * @param {string}    address - Username or divvy address who's info we are retreiving
  * @param {function}  fn - Callback function
  */
 
 AuthInfo.get = function(domain, address, callback) {
   var self = this;
   
-  function getRippleTxt(callback) {
-    self._getRippleTxt(domain, function(err, txt) {
+  function getDivvyTxt(callback) {
+    self._getDivvyTxt(domain, function(err, txt) {
       if (err) {
         return callback(err);
       }
@@ -95,7 +95,7 @@ AuthInfo.get = function(domain, address, callback) {
     });
   };
 
-  async.waterfall([ getRippleTxt, getUser ], callback);
+  async.waterfall([ getDivvyTxt, getUser ], callback);
 };
 
 exports.AuthInfo = AuthInfo;

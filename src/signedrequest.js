@@ -1,5 +1,5 @@
 var Crypt   = require('./crypt').Crypt;
-var Message = ripple.Message;
+var Message = divvy.Message;
 var parser  = require("url");
 var extend  = require("extend");
 var querystring = require('querystring');

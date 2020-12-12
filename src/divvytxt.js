@@ -1,26 +1,26 @@
 var request   = require('superagent');
-var Currency  = ripple.Currency;
+var Currency  = divvy.Currency;
 
-var RippleTxt = {
+var DivvyTxt = {
   txts : { }
 };
 
-RippleTxt.urlTemplates = [
-  'https://{{domain}}/ripple.txt',
-  'https://www.{{domain}}/ripple.txt',
-  'https://ripple.{{domain}}/ripple.txt',
-  'http://{{domain}}/ripple.txt',
-  'http://www.{{domain}}/ripple.txt',
-  'http://ripple.{{domain}}/ripple.txt'
+DivvyTxt.urlTemplates = [
+  'https://{{domain}}/divvy.txt',
+  'https://www.{{domain}}/divvy.txt',
+  'https://divvy.{{domain}}/divvy.txt',
+  'http://{{domain}}/divvy.txt',
+  'http://www.{{domain}}/divvy.txt',
+  'http://divvy.{{domain}}/divvy.txt'
 ];
 
 /**
- * Gets the ripple.txt file for the given domain
+ * Gets the divvy.txt file for the given domain
  * @param {string}    domain - Domain to retrieve file from
  * @param {function}  fn - Callback function
  */
 
-RippleTxt.get = function(domain, fn) {
+DivvyTxt.get = function(domain, fn) {
   var self = this;
 
   if (self.txts[domain]) {
@@ -28,10 +28,10 @@ RippleTxt.get = function(domain, fn) {
   }
 
   ;(function nextUrl(i) {
-    var url = RippleTxt.urlTemplates[i];
+    var url = DivvyTxt.urlTemplates[i];
 
     if (!url) {
-      return fn(new Error('No ripple.txt found'));
+      return fn(new Error('No divvy.txt found'));
     }
 
     url = url.replace('{{domain}}', domain);
@@ -51,11 +51,11 @@ RippleTxt.get = function(domain, fn) {
 };
 
 /**
- * Parse a ripple.txt file
- * @param {string}  txt - Unparsed ripple.txt data
+ * Parse a divvy.txt file
+ * @param {string}  txt - Unparsed divvy.txt data
  */
 
-RippleTxt.parse = function(txt) {
+DivvyTxt.parse = function(txt) {
   var currentSection = '';
   var sections = { };
   
@@ -89,7 +89,7 @@ RippleTxt.parse = function(txt) {
  * @param {Object} url
  */
 
-RippleTxt.extractDomain = function (url) {
+DivvyTxt.extractDomain = function (url) {
   match = /[^.]*\.[^.]{2,3}(?:\.[^.]{2,3})?([^.\?][^\?.]+?)?$/.exec(url);
   return match && match[0] ? match[0] : url;
 };
@@ -97,13 +97,13 @@ RippleTxt.extractDomain = function (url) {
 /**
  * getCurrencies
  * returns domain, issuer account and currency object
- * for each currency found in the domain's ripple.txt file
+ * for each currency found in the domain's divvy.txt file
  * @param {Object} domain
  * @param {Object} fn
  */
 
-RippleTxt.getCurrencies = function(domain, fn) {
-  var extracted = RippleTxt.extractDomain(domain);
+DivvyTxt.getCurrencies = function(domain, fn) {
+  var extracted = DivvyTxt.extractDomain(domain);
   var self      = this;
   
   //try with extracted domain
@@ -147,4 +147,4 @@ RippleTxt.getCurrencies = function(domain, fn) {
   }
 }; 
 
-exports.RippleTxt = RippleTxt;
+exports.DivvyTxt = DivvyTxt;
