@@ -10,7 +10,7 @@
     "extend": "2.0.0"
   },
   "devDependencies": {
-    "webpack": "1.1.11",
+    "webpack": "5.94.0",
     "gulp-webpack": "1.1.2",
     "gulp": "3.8.10",
     "gulp-bump": "0.1.10",
